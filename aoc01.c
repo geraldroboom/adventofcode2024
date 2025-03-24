@@ -1,26 +1,25 @@
 #include <stdio.h>
+#include <fcntl.h>
 #include <unistd.h>
 
-int count_lines(FILE *fp) {
+int count_lines(int fp) {
     char ch;
+    int nbytes = sizeof(ch);
+    int rtn;
     int lines = 0;
 
-    while(!feof(fp))
-    {
-        ch = fgetc(fp);
-        if(ch == '\n')
-        {
-            lines++;
-        }
+    while (1) {
+        rtn = read(fp, &ch, nbytes);
+        if (rtn < nbytes) break;
+        if (ch == '\n') lines++;
+        // printf("%i\n", lines);
     }
-    rewind(fp);
-
+    lseek(fp, 0, SEEK_SET);
     return lines;
 }
 
 int main(int argc, char *argv[]) {
-    printf("hello\n");
-    FILE *fptr;
+    int fptr;
     int size = 5;
     char number[size];
 
@@ -29,7 +28,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    fptr = fopen(argv[1], "r");
+    fptr = open(argv[1], O_RDONLY);
 
     if (!fptr) {
         printf("fopen\n");
@@ -37,13 +36,19 @@ int main(int argc, char *argv[]) {
     }
 
     int lines = count_lines(fptr);
+    printf("number of lines: %i\n", lines);
     int list1[lines], list2[lines];
 
     for (int i = 0; i < lines; i++) {
-        fread(number, sizeof(char), size, fptr);
-/*     https://stackoverflow.com/questions/3420629/what-is-the-difference-between-sscanf-or-atoi-to-convert-a-string-to-an-integer */
+        read(fptr, number, sizeof(char)*size);
+        sscanf(number, "%d", list1+i);
+        lseek(fptr, 3, SEEK_CUR);
+        read(fptr, number, sizeof(char)*size);
+        sscanf(number, "%d", list2+i);
+        lseek(fptr, 1, SEEK_CUR);
     }
 
-    fclose(fptr);
+    close(fptr);
+    printf("finished...\n");
     return 0;
 }
