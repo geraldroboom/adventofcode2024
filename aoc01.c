@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <unistd.h>
+
+int comp(const void *p1, const void *p2) {
+    if (*(int*)p1 > *(int*)p2) return 1;
+    else return -1;
+}
 
 int count_lines(int fp) {
     char ch;
@@ -49,6 +55,19 @@ int main(int argc, char *argv[]) {
     }
 
     close(fptr);
+
+    qsort(list1, lines, sizeof(int), comp);
+    qsort(list2, lines, sizeof(int), comp);
+
+    int sumdiff = 0, diff = 0;
+
+    for (int i = 0; i < lines; i++) {
+        diff = list1[i] - list2[i];
+        if (diff < 0) diff *= -1;
+        sumdiff += diff;
+    }
+
+    printf("solution: %d\n", sumdiff);
     printf("finished...\n");
     return 0;
 }
