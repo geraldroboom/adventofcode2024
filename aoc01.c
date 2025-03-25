@@ -56,6 +56,8 @@ int main(int argc, char *argv[]) {
 
     close(fptr);
 
+    // PART 1
+
     qsort(list1, lines, sizeof(int), comp);
     qsort(list2, lines, sizeof(int), comp);
 
@@ -67,7 +69,20 @@ int main(int argc, char *argv[]) {
         sumdiff += diff;
     }
 
-    printf("solution: %d\n", sumdiff);
+    printf("solution 1: %d\n", sumdiff);
+
+    // PART 2
+    
+    int simi_score = 0;
+    for (int i = 0; i < lines; i++) {
+        for (int j = 0; j < lines; j++) {
+            if (list1[i] == list2[j]) {
+                simi_score += list1[i];
+            }
+        }
+    }
+    printf("solution 2: %d\n", simi_score);
+
     printf("finished...\n");
     return 0;
 }
