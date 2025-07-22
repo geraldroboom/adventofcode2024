@@ -1,3 +1,5 @@
+#include "aoc01.h"
+#include "utils.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -8,23 +10,8 @@ int comp(const void *p1, const void *p2) {
     else return -1;
 }
 
-int count_lines(int fp) {
-    char ch;
-    int nbytes = sizeof(ch);
-    int rtn;
-    int lines = 0;
 
-    while (1) {
-        rtn = read(fp, &ch, nbytes);
-        if (rtn < nbytes) break;
-        if (ch == '\n') lines++;
-        // printf("%i\n", lines);
-    }
-    lseek(fp, 0, SEEK_SET);
-    return lines;
-}
-
-int main(int argc, char *argv[]) {
+int aoc1(int argc, char *argv[]) {
     int fptr;
     int size = 5;
     char number[size];
@@ -34,6 +21,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    printf("Running task %d with input file %s.\n", 1, argv[1]);
     fptr = open(argv[1], O_RDONLY);
 
     if (!fptr) {

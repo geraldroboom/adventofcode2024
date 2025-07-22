@@ -1,3 +1,4 @@
+#include "aoc02.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -34,7 +35,7 @@ int get_next_number(int fd, int *list) {
     return j;
 }
 
-int main(int argc, char *argv[]) {
+int aoc2(int argc, char *argv[]) {
     int fd;
 
     if (argc != 2) {
