@@ -18,3 +18,10 @@ int count_lines(int fp) {
     lseek(fp, 0, SEEK_SET);
     return lines;
 }
+
+int remove_element_i(int *list, int index, int len) {
+    for( int i = index; i < len-1; i++) {
+        list[i] = list[i+1];
+    }
+    return 0;
+}

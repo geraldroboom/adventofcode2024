@@ -1,8 +1,9 @@
 #include "aoc01.h"
 #include "aoc02.h"
+#include "aoc03.h"
 #include <stdio.h>
 
-#define TASK 1
+#define TASK 3
 
 int task;
 char *argv_new[8];
@@ -31,7 +32,8 @@ int main(int argc, char *argv[]) {
             aoc1(2, argv_new);
         case 2:
             aoc2(2, argv_new);
-    
+        case 3:
+            aoc3(2, argv_new);
     }
     return 0;
 }
